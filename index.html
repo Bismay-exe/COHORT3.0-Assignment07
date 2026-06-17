@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Explorer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-box">
+            <div class="nav-left">
+                <span>DOM</span>
+                <span>Explorer</span>
+            </div>
+            <div class="nav-right">
+                <button id="theme-btn" class="btn blue-btn">
+                    <i class="ri-sun-line"></i>
+                    <!-- <span class="theme-text">Light</span> -->
+                </button>
+                <button id="add-task-btn" class="btn blue-btn">
+                    <i class="ri-add-large-line"></i> <span class="add-text">Add Task</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="form-section">
+        <div class="form-div">
+            <div class="form-header">
+                <h1 class="form-title" id="form-title">Add New Task</h1>
+                <button class="form-close" id="form-close-btn">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+            <form>
+                <div class="labels">
+                    <label for="task-input">Task Title</label>
+                    <input type="text" id="task-input" placeholder="Task">
+                </div>
+                <div class="labels">
+                    <label for="task-category-select">Choose a category...</label>
+                    <select id="task-category-select" class="form-select">
+                        <option value="" disabled selected>Choose a category...</option>
+                        <option value="work">Work</option>
+                        <option value="personal">Personal</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="health">Health</option>
+                        <option value="study">Study</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn blue-btn form-btn">Add Task</button>
+            </form>
+        </div>
+    </section>
+
+    <main>
+        <section id="tasks-section">
+            <div class="header">
+                <h1>All Tasks</h1>
+                <!-- <button id="clear-btn" class="btn red-btn">
+                    <i class="ri-delete-bin-line"></i> <span class="clear-text">Clear All</span>
+                </button> -->
+            </div>
+            <div id="tasks">
+            </div>
+        </section>
+    </main>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
