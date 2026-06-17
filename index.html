@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -12,17 +12,15 @@
 </head>
 
 <body>
-
     <nav>
         <div class="nav-box">
             <div class="nav-left">
-                <span>DOM</span>
-                <span>Explorer</span>
+                <h3>DOM</h3>
+                <h3>Explorer</h3>
             </div>
             <div class="nav-right">
                 <button id="theme-btn" class="btn blue-btn">
                     <i class="ri-sun-line"></i>
-                    <!-- <span class="theme-text">Light</span> -->
                 </button>
                 <button id="add-task-btn" class="btn blue-btn">
                     <i class="ri-add-large-line"></i> <span class="add-text">Add Task</span>
@@ -31,6 +29,7 @@
         </div>
     </nav>
 
+    <!-- Form Modal -->
     <section id="form-section">
         <div class="form-div">
             <div class="form-header">
@@ -42,7 +41,7 @@
             <form>
                 <div class="labels">
                     <label for="task-input">Task Title</label>
-                    <input type="text" id="task-input" placeholder="Task">
+                    <input type="text" id="task-input" placeholder="What needs to be done?">
                 </div>
                 <div class="labels">
                     <label for="task-category-select">Choose a category...</label>
@@ -55,21 +54,74 @@
                         <option value="study">Study</option>
                     </select>
                 </div>
-                <button type="submit" class="btn blue-btn form-btn">Add Task</button>
+                <button type="submit" id="form-submit-btn" class="btn blue-btn form-btn">Add Task</button>
             </form>
         </div>
     </section>
 
+    <!-- Task List -->
     <main>
         <section id="tasks-section">
             <div class="header">
                 <h1>All Tasks</h1>
+                <button id="clearall-btn" class="btn red-btn"><i class="ri-delete-bin-6-line"></i> Clear All</button>
+            </div>
+            <div class="counters">
+                <h4>Total: <span id="total-count">0</span></h4>
+                <h4>Completed: <span id="completed-count">0</span></h4>
+                <h4>Pending: <span id="pending-count">0</span></h4>
             </div>
             <div id="tasks">
+                <!-- Task cards will be created here dynamically using createElement() -->
             </div>
         </section>
     </main>
 
+    <section id="propagation-section" class="propagation-section">
+        <h1 class="section-heading">Event Propagation Demo</h1>
+        <div class="propagation-boxes">
+            <p class="section-desc">Open the browser console and click the "Child" button to see Bubbling and Capturing
+                order.</p>
+            <div id="grandparent" class="prop-box grandparent-box">
+                <span>Grandparent</span>
+                <div id="parent" class="prop-box parent-box">
+                    <span>Parent</span>
+                    <div id="child" class="prop-box child-box">Child</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pipeline-section" class="pipeline-section">
+        <h1 class="section-heading">Browser Rendering Pipeline</h1>
+        <div class="pipeline-flow">
+            <div class="pipeline-column">
+                <div class="pipeline-card">HTML</div>
+                <div class="pipeline-arrow"><i class="ri-arrow-down-long-line"></i></div>
+                <div class="pipeline-card">Parsing</div>
+                <div class="pipeline-arrow"><i class="ri-arrow-down-long-line"></i></div>
+                <div class="pipeline-card">Tokenization</div>
+                <div class="pipeline-arrow"><i class="ri-arrow-down-long-line"></i></div>
+                <div class="pipeline-card">DOM Tree</div>
+            </div>
+
+            <div class="pipeline-column">
+                <div class="pipeline-card">CSS</div>
+                <div class="pipeline-arrow"><i class="ri-arrow-down-long-line"></i></div>
+                <div class="pipeline-card">CSSOM Tree</div>
+            </div>
+        </div>
+
+        <div class="pipeline-column">
+            <div class="pipeline-merge">
+                <div class="pipeline-card pipeline-final">DOM Tree</div>
+                <div class="pipeline-arrow"><i class="ri-add-large-line"></i></div>
+                <div class="pipeline-card pipeline-final">CSSOM Tree</div>
+            </div>
+            <div class="pipeline-arrow"><i class="ri-arrow-down-long-line"></i></div>
+            <div class="pipeline-card pipeline-final">Render Tree</div>
+        </div>
+    </section>
 
     <script src="script.js"></script>
 </body>
