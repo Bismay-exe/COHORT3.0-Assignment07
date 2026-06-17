@@ -112,14 +112,9 @@ h1 {
 }
 
 .nav-btn {
-    background: var(--surface);
-    color: var(--text);
+    background: var(--blue-btn-text);
+    color: var(--blue-btn-bg);
 }
-
-/* .nav-btn:hover {
-    background: var(--blue-btn-bg-hover);
-    color: var(--blue-btn-text);
-} */
 
 .green-btn {
     background: var(--green-btn-bg);
