@@ -111,6 +111,16 @@ h1 {
     background: var(--blue-btn-bg-hover);
 }
 
+.nav-btn {
+    background: var(--surface);
+    color: var(--text);
+}
+
+/* .nav-btn:hover {
+    background: var(--blue-btn-bg-hover);
+    color: var(--blue-btn-text);
+} */
+
 .green-btn {
     background: var(--green-btn-bg);
     color: var(--green-btn-text);
@@ -155,7 +165,8 @@ nav {
 }
 
 .nav-box {
-    background: var(--surface);
+    background: var(--blue-btn-bg);
+    color: var(--blue-btn-text);
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-md);
     border-radius: 24px;
@@ -404,7 +415,7 @@ select {
     font-size: 15px;
 }
 
-/* Event Propagation Section */
+/* ===== Event Propagation Section ===== */
 .propagation-section {
     width: 100%;
     max-width: 1200px;
@@ -473,7 +484,7 @@ select {
     padding: 20px 28px;
 }
 
-/* Browser Rendering Pipeline Section */
+/* ===== Browser Rendering Pipeline Section ===== */
 .pipeline-section {
     width: 100%;
     max-width: 1200px;
