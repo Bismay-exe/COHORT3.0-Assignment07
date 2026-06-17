@@ -9,6 +9,8 @@ This is a task manager app I built using HTML, CSS and JavaScript. No frameworks
 - Dark mode and light mode toggle
 - Clear all tasks button
 - Shows total, completed and pending task count
+- Tasks are saved in localStorage so they stay even after refreshing the page
+- Theme preference is also saved in localStorage
 - There is also a section for event propagation demo and browser rendering pipeline
 
 ---

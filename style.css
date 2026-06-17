@@ -117,7 +117,7 @@ h1 {
 }
 
 .green-btn {
-    background: var(--green-btn-bg);
+    background: transparent;
     color: var(--green-btn-text);
 }
 
@@ -127,7 +127,7 @@ h1 {
 }
 
 .red-btn {
-    background: var(--red-btn-bg);
+    background: transparent;
     color: var(--red-btn-text);
 }
 

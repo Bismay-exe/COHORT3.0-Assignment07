@@ -15,9 +15,42 @@ const totalCount = document.querySelector("#total-count");
 const completedCount = document.querySelector("#completed-count");
 const pendingCount = document.querySelector("#pending-count");
 
-const tasksArr = [];
+let tasksArr = [];
 let taskIdCounter = 0;
 let editingTaskId = null;
+
+
+// LOCAL STORAGE - save tasks
+function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasksArr));
+    localStorage.setItem("taskIdCounter", taskIdCounter);
+}
+
+// LOCAL STORAGE - load tasks on page load
+function loadTasks() {
+    let saved = localStorage.getItem("tasks");
+    if (saved) {
+        tasksArr = JSON.parse(saved);
+    }
+    let savedCounter = localStorage.getItem("taskIdCounter");
+    if (savedCounter) {
+        taskIdCounter = parseInt(savedCounter);
+    }
+
+    // load saved theme
+    let savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+        document.documentElement.setAttribute("data-theme", savedTheme);
+        if (savedTheme === "dark") {
+            themeIcon.className = "ri-moon-line";
+        } else {
+            themeIcon.className = "ri-sun-line";
+        }
+    }
+
+    renderTasks();
+    updateCounters();
+}
 
 
 // UPDATE COUNTERS
@@ -46,89 +79,42 @@ function renderTasks() {
     tasksList.innerHTML = "";
 
     tasksArr.forEach(function (task) {
-        // createElement()
-        let card = document.createElement("div");
-        card.classList.add("task-card");
 
-        // setAttribute(): setting custom data attributes
-        card.setAttribute("data-id", task.id);
-        card.setAttribute("data-status", task.status);
-        card.setAttribute("data-category", task.category);
+        tasksList.innerHTML += `
+            <div class="task-card"
+                data-id="${task.id}"
+                data-status="${task.status}"
+                data-category="${task.category}">
 
-        // Card left (checkbox)
-        let cardLeft = document.createElement("div");
-        cardLeft.classList.add("card-left");
+                <div class="card-left">
+                    <button class="check-box-btn" data-action="complete">
+                        <i class="ri-checkbox-blank-circle-line check-box unchecked ${task.status === "completed" ? "checked-hidden" : ""}"></i>
+                        <i class="ri-checkbox-circle-line check-box checked ${task.status === "completed" ? "checked-visible" : ""}"></i>
+                    </button>
+                </div>
 
-        let checkBtn = document.createElement("button");
-        checkBtn.classList.add("check-box-btn");
-        // Using dataset to set action
-        checkBtn.dataset.action = "complete";
+                <div class="card-center">
+                    <h3 class="task-text ${task.status === "completed" ? "task-done" : ""}">
+                        ${task.name}
+                    </h3>
 
-        let uncheckedIcon = document.createElement("i");
-        uncheckedIcon.className = "ri-checkbox-blank-circle-line check-box unchecked";
+                    <h4 class="subject-text">
+                        #${task.category}
+                    </h4>
+                </div>
 
-        let checkedIcon = document.createElement("i");
-        checkedIcon.className = "ri-checkbox-circle-line check-box checked";
+                <div class="card-btns">
+                    <button class="btn green-btn" data-action="edit">
+                        <i class="ri-edit-2-line"></i> Edit
+                    </button>
 
-        // append(): appending multiple children at once
-        checkBtn.append(uncheckedIcon, checkedIcon);
-        cardLeft.appendChild(checkBtn);
+                    <button class="btn red-btn" data-action="delete">
+                        <i class="ri-delete-bin-line"></i> Delete
+                    </button>
+                </div>
 
-        // Card center (task info)
-        let cardCenter = document.createElement("div");
-        cardCenter.classList.add("card-center");
-
-        let taskText = document.createElement("h3");
-        taskText.classList.add("task-text");
-        // createTextNode()
-        let textNode = document.createTextNode(task.name);
-        taskText.appendChild(textNode);
-
-        let subjectText = document.createElement("h4");
-        subjectText.classList.add("subject-text");
-        let categoryNode = document.createTextNode("#" + task.category);
-        subjectText.appendChild(categoryNode);
-
-        cardCenter.append(taskText, subjectText);
-
-        // Card right (action buttons)
-        let cardBtns = document.createElement("div");
-        cardBtns.classList.add("card-btns");
-
-        // Edit button
-        let editBtn = document.createElement("button");
-        editBtn.classList.add("btn", "green-btn");
-        editBtn.dataset.action = "edit";
-        let editIcon = document.createElement("i");
-        editIcon.className = "ri-edit-2-line";
-        let editText = document.createTextNode(" Edit");
-        editBtn.append(editIcon, editText);
-
-        // Delete button
-        let deleteBtn = document.createElement("button");
-        deleteBtn.classList.add("btn", "red-btn");
-        deleteBtn.dataset.action = "delete";
-        let deleteIcon = document.createElement("i");
-        deleteIcon.className = "ri-delete-bin-line";
-        let deleteText = document.createTextNode(" Delete");
-        deleteBtn.append(deleteIcon, deleteText);
-
-        cardBtns.append(editBtn, deleteBtn);
-
-        // If task is completed, add the done styles
-        if (task.status === "completed") {
-            taskText.classList.add("task-done");
-            uncheckedIcon.classList.add("checked-hidden");
-            checkedIcon.classList.add("checked-visible");
-        }
-
-        // appendChild()
-        card.appendChild(cardLeft);
-        card.appendChild(cardCenter);
-        card.appendChild(cardBtns);
-
-        // append() to parent container
-        tasksList.append(card);
+            </div>
+        `;
     });
 }
 
@@ -227,6 +213,7 @@ form.addEventListener("submit", function (e) {
 
     renderTasks();
     updateCounters();
+    saveTasks();
     form.reset();
     formSection.style.display = "none";
 });
@@ -259,6 +246,7 @@ tasksList.addEventListener("click", function (e) {
         }
         card.remove();
         updateCounters();
+        saveTasks();
     }
 
     // COMPLETE
@@ -283,6 +271,7 @@ tasksList.addEventListener("click", function (e) {
         unchecked.classList.toggle("checked-hidden");
         checked.classList.toggle("checked-visible");
         updateCounters();
+        saveTasks();
     }
 
     // EDIT
@@ -307,6 +296,7 @@ clearAllBtn.addEventListener("click", function () {
     tasksArr.length = 0;
     tasksList.innerHTML = "";
     updateCounters();
+    saveTasks();
 });
 
 
@@ -321,11 +311,12 @@ themeBtn.addEventListener("click", function () {
     if (currentTheme === "light") {
         // setAttribute()
         document.documentElement.setAttribute("data-theme", "dark");
-        // classList
         themeIcon.className = "ri-moon-line";
+        localStorage.setItem("theme", "dark");
     } else {
         document.documentElement.setAttribute("data-theme", "light");
         themeIcon.className = "ri-sun-line";
+        localStorage.setItem("theme", "light");
     }
 });
 
@@ -387,3 +378,7 @@ if (grandparent && parent && child) {
 // BUBBLING: Child clicked          (bubbling phase - inside to outside)
 // BUBBLING: Parent clicked
 // BUBBLING: Grandparent clicked
+
+
+// Load everything when page opens
+loadTasks();
